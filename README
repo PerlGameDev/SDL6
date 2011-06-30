@@ -8,8 +8,17 @@ Which was really no great feat.
 
 You will need 
 
-https://github.com/jnthn/zavolaj 
+https://github.com/jnthn/zavolaj  
 
 and perl6 
+
+WARNING!!!
+
+or if you have parrot 3.5 installed don't install 
+
+https://github.com/jnthn/zavolaj
+
+
+
 
 
