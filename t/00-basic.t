@@ -1,6 +1,6 @@
 use v6;
 use Test;
-use Text::Mock;
+use Test::Mock;
 use SDL;
 
 plan 2;
