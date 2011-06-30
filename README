@@ -1,0 +1,15 @@
+Simple perl6 NCI usage for SDL. 
+
+I made this work a few months ago at 
+
+https://gist.github.com/744192
+
+Which was really no great feat. 
+
+You will need 
+
+https://github.com/jnthn/zavolaj 
+
+and perl6 
+
+
