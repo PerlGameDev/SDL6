@@ -1,16 +1,20 @@
 use v6;
 use NativeCall;
 
-class SDL_Surface is OpaquePointer;
+class SDL {
 
+    my sub SDL_Init(int32 $flags)
+        returns int32
+        is native('libSDL')
+        { * }
 
-sub SDL_SetVideoMode( Int $width, Int $height, Int $bpp, Int $flags )
-	
-	returns SDL_Surface 
+    my sub SDL_Quit()
+	is native('libSDL')
+        { * }
 
-	is native('libSDL') { }
+    method init(int32 $flags) returns int32 { SDL_Init($flags) }
+    method quit() { SDL_Quit() }
+}
 
-sub SDL_Quit()
-	is native('libSDL') { }
-
+# vim: ft=perl6
 
