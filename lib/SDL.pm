@@ -31,6 +31,12 @@ class SDL {
         is native('libSDL')
         { * }
 
+    # TODO: SDL_SetError
+
+    my sub SDL_Error(int32 $code)
+        is native('libSDL')
+        { * }
+
     method init(int32 $flags) returns int32 { SDL_Init($flags) }
 
     method init_sub_system(int32 $flags) returns int32 {
@@ -44,6 +50,8 @@ class SDL {
     method was_init(int32 $flags) returns int32 { SDL_WasInit($flags) }
 
     method get_error() returns Str { SDL_GetError() }
+
+    method error(int32 $code) { SDL_Error($code) }
 }
 
 # vim: ft=perl6
