@@ -23,3 +23,6 @@ check-mock($x,
 		*.called('quit', times => 1),
 		);
 
+
+# vim: ft=perl6
+
