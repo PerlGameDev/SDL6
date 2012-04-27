@@ -8,5 +8,5 @@ sleep(2);
 
 SDL.quit();
 
-# vim: ft=perl
+# vim: ft=perl6
 
