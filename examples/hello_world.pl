@@ -23,7 +23,7 @@ $rect.init(100, 101, 102, 103);
 my int32 $color = SDL::Video.map_RGB($screen.format, 0, 0, 255);
 say $color;
 
-SDL::Video.fill_rect($screen, $screen.clip_rect, $color);
+SDL::Video.fill_rect($screen, SDL::Rect, $color);
 #SDL::Video.fill_rect($screen, $rect, $color);
 
 SDL::Video.flip($screen);
