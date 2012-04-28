@@ -1,6 +1,6 @@
 {
     "name" : "SDL",
-    "version" : "2011.06",
+    "version" : "2012.04",
     "description" : "A Perl 6 NCI wrapper around SDL 1.2",
     "depends" : [ "Test::Mock" ],
     "source-url" : "git://github.com/PerlGameDev/SDL6.git"
