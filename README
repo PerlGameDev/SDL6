@@ -1,0 +1,8 @@
+Perl 6 SDL 1.2 Using NativeCall
+
+Requires Rakudo Star 2012.04
+
+Example:
+
+    PERL6LIB="lib" perl6 examples/hello_world.pl
+
