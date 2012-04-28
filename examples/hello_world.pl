@@ -10,8 +10,9 @@ my $flags = 0;
 
 my $screen = SDL::Video.set_video_mode($width, $height, $depth, $flags);
 
-my $rect = SDL::Rect.new();
-$rect.init(100, 101, 102, 103);
+# This doesn't work ...
+#my $rect = SDL::Rect.new();
+#$rect.init(100, 101, 102, 103);
 
 my int32 $color = SDL::Video.map_RGB($screen.format, 0, 0, 255);
 
