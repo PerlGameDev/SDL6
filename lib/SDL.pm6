@@ -17,6 +17,44 @@ class SDL::Version is repr('CStruct') {
 	}
 }
 
+=begin pod
+
+=head2 init
+
+ SDL::init( $flags );
+
+The SDL::init function initializes the Simple Directmedia Library and the subsystems specified by C<$flags>. It should be called before all other SDL functions.
+
+B<Note>: Unless the C<$SDL_INIT_NOPARACHUTE> flag is set, it will install cleanup signal handlers for some commonly ignored fatal signals (like SIGSEGV). 
+
+B<Parameter>:
+
+$flags - The SDL subsystem(s) to initialize. The flags can be bitwise-ORed together. You should specify the subsystems which you will be using in your application.
+
+ $SDL_INIT_AUDIO        The audio subsystem
+ $SDL_INIT_VIDEO        The video subsystem
+ $SDL_INIT_CDROM        The cdrom subsystem
+ $SDL_INIT_JOYSTICK     The joystick subsystem
+ $SDL_INIT_TIMER        The timer subsystem
+ $SDL_INIT_EVERYTHING   All of the above
+ $SDL_INIT_NOPARACHUTE  Prevents SDL from catching fatal signals
+ $SDL_INIT_EVENTTHREAD  Runs the event manager in a separate thread 
+
+B<Return value>:
+
+C<SDL::init> returns C<0> on success, or C<-1> on error.
+
+B<Example>:
+
+ if 0 != SDL::init( $SDL_INIT_AUDIO +| $SDL_INIT_VIDEO ) {
+     die 'Failed to initialize libSDL with reason: "' ~ SDL::get_error() ~ '"';
+ }
+
+B<Note>: You can get extended error message by calling C<SDL::get_error()>. Typical cause of this error is using a particular display without having according subsystem support,
+such as missing mouse driver when using with framebuffer device. In this case you can either compile SDL without mouse device, or set "SDL_NOMOUSE=1" environment variable before running your application. 
+
+=end pod
+
 our sub init( int32 )             returns Int            is native('libSDL')  is symbol('SDL_Init')            { * }
 our sub init_subsystem( int32 )   returns Int            is native('libSDL')  is symbol('SDL_InitSubSystem')   { * }
 our sub quit_subsystem( int32 )                          is native('libSDL')  is symbol('SDL_QuitSubSystem')   { * }
