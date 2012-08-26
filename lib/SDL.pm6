@@ -3,27 +3,8 @@ module SDL;
 
 use NativeCall;
 
-#macro _call( $method, $returns, $symbol ) {
-#	quasi {
-#		our sub get_ticks( )
-#			returns Int
-#			is native('libSDL')
-#			is named('SDL_GetTicks')
-#			{ * }
-#	};
-#}
-
-#macro _call( $method, $params, $returns, $symbol ) {
-#	quasi {
-#		our sub {{{$method}}}(  )
-#			returns {{{$returns}}}
-#			is native('libSDL')
-#			is named("'{{{$symbol}}}'")
-#			{ * }
-#	};
-#}
-
 class SDL::Version is repr('CStruct') {
+	# this is a workaround, since NativeCall doesn't yet handle sized ints right
 	has int8 $!version;
 	method major() {
 		return $!version +& 0xFF;
@@ -36,23 +17,15 @@ class SDL::Version is repr('CStruct') {
 	}
 }
 
-our sub init( int32 )				returns Int				is native('libSDL')	is symbol('SDL_Init')			{ * }
-our sub init_subsystem( int32 )		returns Int				is native('libSDL')	is symbol('SDL_InitSubSystem')	{ * }
-our sub quit_subsystem( int32 )								is native('libSDL')	is symbol('SDL_QuitSubSystem')	{ * }
-our sub was_init( int32 )			returns Int				is native('libSDL')	is symbol('SDL_WasInit')		{ * }
-our sub get_ticks( )				returns Int				is native('libSDL')	is symbol('SDL_GetTicks')		{ * }
-our sub delay( int32 )										is native('libSDL')	is symbol('SDL_Delay')			{ * }
-our sub linked_version( )			returns SDL::Version	is native('libSDL')	is symbol('SDL_Linked_Version')	{ * }
-our sub rw_from_file( Str, Str )	returns OpaquePointer	is native('libSDL')	is symbol('SDL_RWFromFile')		{ * }
-
-#our sub get_ticks( )
-#	returns Int
-#	is native('libSDL')
-#	is named('SDL_GetTicks')
-#	{ * }
-
-#_call( 'get_ticks', '', 'Int', 'SDL_GetTicks' );
-
+our sub init( int32 )             returns Int            is native('libSDL')  is symbol('SDL_Init')            { * }
+our sub init_subsystem( int32 )   returns Int            is native('libSDL')  is symbol('SDL_InitSubSystem')   { * }
+our sub quit_subsystem( int32 )                          is native('libSDL')  is symbol('SDL_QuitSubSystem')   { * }
+our sub was_init( int32 )         returns Int            is native('libSDL')  is symbol('SDL_WasInit')         { * }
+our sub get_ticks( )              returns Int            is native('libSDL')  is symbol('SDL_GetTicks')        { * }
+our sub get_error( )              returns Str            is native('libSDL')  is symbol('SDL_GetError')        { * }
+our sub delay( int32 )                                   is native('libSDL')  is symbol('SDL_Delay')           { * }
+our sub linked_version( )         returns SDL::Version   is native('libSDL')  is symbol('SDL_Linked_Version')  { * }
+our sub rw_from_file( Str, Str )  returns OpaquePointer  is native('libSDL')  is symbol('SDL_RWFromFile')      { * }
 
 =begin DATA
 our sub init( int32 )		returns Int	is native('libSDL')	is named('SDL_AddTimer')	{ * }
@@ -117,7 +90,6 @@ our sub init( int32 )		returns Int	is native('libSDL')	is named('SDL_GetAppState
 our sub init( int32 )		returns Int	is native('libSDL')	is named('SDL_GetAudioStatus')	{ * }
 our sub init( int32 )		returns Int	is native('libSDL')	is named('SDL_GetClipRect')	{ * }
 our sub init( int32 )		returns Int	is native('libSDL')	is named('SDL_GetCursor')	{ * }
-our sub init( int32 )		returns Int	is native('libSDL')	is named('SDL_GetError')	{ * }
 our sub init( int32 )		returns Int	is native('libSDL')	is named('SDL_GetEventFilter')	{ * }
 our sub init( int32 )		returns Int	is native('libSDL')	is named('SDL_GetGammaRamp')	{ * }
 our sub init( int32 )		returns Int	is native('libSDL')	is named('SDL_GetKeyName')	{ * }
