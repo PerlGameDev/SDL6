@@ -3,12 +3,14 @@ module SDL::Mixer::Channels;
 
 use NativeCall;
 
-our sub volume( int, int )									returns Int	is native('libSDL_mixer')	is symbol('Mix_Volume')				{ * }
-our sub allocate_channels( int )							returns Int	is native('libSDL_mixer')	is symbol('Mix_AllocateChannels')	{ * }
-our sub channel_finished( &callback(int) )					returns Int	is native('libSDL_mixer')	is symbol('Mix_ChannelFinished')	{ * }
-our sub play_channel_timed( int, OpaquePointer, int, int )	returns Int	is native('libSDL_mixer')	is symbol('Mix_PlayChannelTimed')	{ * }
-our sub play_channel( int $channel, OpaquePointer $sample, int $loops )	returns Int {
-	return play_channel_timed( $channel, $sample, $loops, -1 );
-}
+our sub volume( int, int )										returns Int	is native('libSDL_mixer')	is symbol('Mix_Volume')				{ * }
+our sub allocate( int )											returns Int	is native('libSDL_mixer')	is symbol('Mix_AllocateChannels')	{ * }
+our sub finished( Code &callback(int) )							returns Int	is native('libSDL_mixer')	is symbol('Mix_ChannelFinished')	{ * }
+our sub play( $channel, $sample, $loops, $time = -1 )			returns Int { return _play( $channel, $sample, $loops, $time ); }
+our sub _play( int, OpaquePointer, int, int )					returns Int	is native('libSDL_mixer')	is symbol('Mix_PlayChannelTimed')	{ * }
+our sub halt( int )												returns Int	is native('libSDL_mixer')	is symbol('Mix_HaltChannel')		{ * }
+our sub playing( int )											returns Int	is native('libSDL_mixer')	is symbol('Mix_Playing')			{ * }
+our sub paused( int )											returns Int	is native('libSDL_mixer')	is symbol('Mix_Paused')				{ * }
+our sub fading( int )											returns Int	is native('libSDL_mixer')	is symbol('Mix_FadingChannel')		{ * }
 
 1;
