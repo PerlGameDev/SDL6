@@ -3,6 +3,8 @@ module SDL;
 
 use NativeCall;
 
+constant SDL_INIT_VIDEO = 32;
+
 class SDL::Version is repr('CStruct') {
 	# this is a workaround, since NativeCall doesn't yet handle sized ints right
 	has int8 $!version;
@@ -51,7 +53,7 @@ B<Example>:
  }
 
 B<Note>: You can get extended error message by calling C<SDL::get_error()>. Typical cause of this error is using a particular display without having according subsystem support,
-such as missing mouse driver when using with framebuffer device. In this case you can either compile SDL without mouse device, or set "SDL_NOMOUSE=1" environment variable before running your application. 
+such as missing mouse driver when using with framebuffer device. In this case you can either compile SDL without mouse device, or set C<"SDL_NOMOUSE=1"> environment variable before running your application. 
 
 =end pod
 
@@ -183,11 +185,8 @@ our sub init( int32 )		returns Int	is native('libSDL')	is named('SDL_NumJoystick
 our sub init( int32 )		returns Int	is native('libSDL')	is named('SDL_OpenAudio')	{ * }
 our sub init( int32 )		returns Int	is native('libSDL')	is named('SDL_PauseAudio')	{ * }
 our sub init( int32 )		returns Int	is native('libSDL')	is named('SDL_PeepEvents')	{ * }
-our sub init( int32 )		returns Int	is native('libSDL')	is named('SDL_PollEvent')	{ * }
-our sub init( int32 )		returns Int	is native('libSDL')	is named('SDL_PumpEvents')	{ * }
 our sub init( int32 )		returns Int	is native('libSDL')	is named('SDL_PushEvent')	{ * }
 our sub init( int32 )		returns Int	is native('libSDL')	is named('SDL_Quit')	{ * }
-our sub init( int32 )		returns Int	is native('libSDL')	is named('SDL_RWFromConstMem')	{ * }
 our sub init( int32 )		returns Int	is native('libSDL')	is named('SDL_RWFromFP')	{ * }
 our sub init( int32 )		returns Int	is native('libSDL')	is named('SDL_RWFromFile')	{ * }
 our sub init( int32 )		returns Int	is native('libSDL')	is named('SDL_RWFromMem')	{ * }
