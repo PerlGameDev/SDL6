@@ -61,8 +61,43 @@ class SDL::Surface {
 		_update( $!pointer, $x, $y, $w, $h )
 	}
 
+	method get_clip_rect {
+		my $clip = CArray[int].new();
+		$clip[0] = 0;
+		_get_clip_rect( $!pointer, $clip );
+	}
+
 	method flip {
 		_flip( $!pointer )
+	}
+
+	method set_pixel ( Int $x = 0, Int $y = 0, Int $color = 0xFFFFFFFF ) {
+		_fill_rect( $!pointer, SDL::Rect.new( $x, $y, 1, 1 ).CArray, $color )
+	}
+
+	method draw_line ( Int $x0 is copy = 0, Int $y0 is copy = 0, Int $x1 is copy = 0, Int $y1 is copy = 0, Int $color = 0xFFFFFFFF ) {
+		my Int $dx  = ($x1 - $x0).abs;
+		my Int $dy  = ($y1 - $y0).abs;
+		my Int $sx  = $x0 < $x1 ?? 1 !! -1;
+		my Int $sy  = $y0 < $y1 ?? 1 !! -1;
+		my Int $err = $dx - $dy;
+
+		while 1 {
+			_fill_rect( $!pointer, SDL::Rect.new( $x0, $y0, 1, 1 ).CArray, $color );
+			last if $x0 == $x1 && $y0 == $y1;
+
+			my Int $e2 = 2 * $err;
+
+			if $e2 > -$dy {
+				$err = $err - $dy;
+				$x0  = $x0  + $sx;
+			}
+
+			if $e2 < $dx {
+				$err = $err + $dx;
+				$y0  = $y0  + $sy;
+			}
+		}
 	}
 }
 
@@ -86,5 +121,8 @@ our sub _is_xpm( OpaquePointer )                                         returns
 our sub _is_xv( OpaquePointer )                                          returns Int            is native('libSDL_image')  is symbol('IMG_isXV')            { * }
 our sub _rw_from_file( Str, Str )                                        returns OpaquePointer  is native('libSDL')        is symbol('SDL_RWFromFile')      { * }
 our sub _rw_from_const_mem( OpaquePointer, int )                         returns OpaquePointer  is native('libSDL')        is symbol('SDL_RWFromConstMem')  { * }
+our sub _fill_rect( OpaquePointer, CArray[int], int )                    returns Int            is native('libSDL')        is symbol('SDL_FillRect')        { * }
+our sub _get_clip_rect( OpaquePointer, CArray[int] )                                            is native('libSDL')        is symbol('SDL_GetClipRect')     { * }
+
 
 1;
