@@ -17,8 +17,7 @@ class SDL::Rect {
 
 	method CArray {
 		my $carr = CArray[int].new();
-		$carr[0] = ($!y +< 16) +| $!x;
-		$carr[1] = ($!h +< 16) +| $!w;
+		$carr[0] = ($!h +< 48) +| ($!w +< 32) +| ($!y +< 16) +| $!x;
 		$carr
 	}
 }
