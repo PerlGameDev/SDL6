@@ -75,27 +75,36 @@ class SDL::Surface {
 		_fill_rect( $!pointer, SDL::Rect.new( $x, $y, 1, 1 ).CArray, $color )
 	}
 
+	# http://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
 	method draw_line ( Int $x0 is copy = 0, Int $y0 is copy = 0, Int $x1 is copy = 0, Int $y1 is copy = 0, Int $color = 0xFFFFFFFF ) {
 		my Int $dx  = ($x1 - $x0).abs;
 		my Int $dy  = ($y1 - $y0).abs;
 		my Int $sx  = $x0 < $x1 ?? 1 !! -1;
 		my Int $sy  = $y0 < $y1 ?? 1 !! -1;
 		my Int $err = $dx - $dy;
+		
+		if $dx == 0 {
+			_fill_rect( $!pointer, SDL::Rect.new( $x0, $y0, 1, $dy ).CArray, $color );
+		}
+		elsif $dy == 0 {
+			_fill_rect( $!pointer, SDL::Rect.new( $x0, $y0, $dx, 1 ).CArray, $color );
+		}
+		else {
+			while 1 {
+				_fill_rect( $!pointer, SDL::Rect.new( $x0, $y0, 1, 1 ).CArray, $color );
+				last if $x0 == $x1 && $y0 == $y1;
 
-		while 1 {
-			_fill_rect( $!pointer, SDL::Rect.new( $x0, $y0, 1, 1 ).CArray, $color );
-			last if $x0 == $x1 && $y0 == $y1;
+				my Int $e2 = 2 * $err;
 
-			my Int $e2 = 2 * $err;
+				if $e2 > -$dy {
+					$err = $err - $dy;
+					$x0  = $x0  + $sx;
+				}
 
-			if $e2 > -$dy {
-				$err = $err - $dy;
-				$x0  = $x0  + $sx;
-			}
-
-			if $e2 < $dx {
-				$err = $err + $dx;
-				$y0  = $y0  + $sy;
+				if $e2 < $dx {
+					$err = $err + $dx;
+					$y0  = $y0  + $sy;
+				}
 			}
 		}
 	}
