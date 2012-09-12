@@ -2,16 +2,13 @@
 module SDL::Controller;
 
 use NativeCall;
+#use SDL; # I cant do that?
 use SDL::Event;
 
 class SDL::Controller {
 	has @!show_handlers;
 	has @!event_handlers;
 	has Bool $!stop = False;
-
-	#method new( $w, $h, $bpp, $flags ) {
-	#	self.bless( *, file => Str, rw => OpaquePointer, pointer => _set_video_mode( $w, $h, $bpp, $flags ) );
-	#}
 
 	method add_show_handler( Code $handler ) {
 		@!show_handlers.push( $handler )
@@ -78,11 +75,12 @@ class SDL::Controller {
 			# these can change during the cycle
 			#$dt    = $_dt{$ref};
 			#$delay = $_delay{$ref};
+			_delay( 20 );
 		}
 	}
 }
 
-our sub _set_video_mode( Int, Int, Int, Int )  returns OpaquePointer  is native('libSDL')  is symbol('SDL_SetVideoMode')  { * }
-our sub _pump_events( )                        returns Int            is native('libSDL')  is symbol('SDL_PumpEvents')    { * }
+our sub _pump_events( )  returns Int  is native('libSDL')  is symbol('SDL_PumpEvents')  { * }
+our sub _delay( int32 )               is native('libSDL')  is symbol('SDL_Delay')       { * }
 
 1;
