@@ -21,12 +21,6 @@ class SDL::Event {
 #  SDL_UserEvent user;
 #  SDL_SysWMEvent syswm; is rw;
 
-	#method new( $x = 0, $y = 0, $w = 0, $h = 0 ) {
-	#	self.bless( *, x => $x, y => $y, w => $w, h => $h );
-	#}
-
-	#submethod BUILD( :$!x, :$!y, :$!w, :$!h ) { * }
-
 	my $carr = CArray[int].new();
 
 	method CArray {
@@ -43,9 +37,9 @@ class SDL::Event {
 		_poll_event( self.CArray )
 	}
 
-	method type          { $carr[0]         +& 0xFF;   }
+	method type          {  $carr[0]        +& 0xFF;   }
 	method key_state     { ($carr[0] +> 16) +& 0xFF;   }
-	method key_sym       { $carr[1]         +& 0xFF;   }
+	method key_sym       {  $carr[1]        +& 0xFF;   }
 	method button_button { ($carr[0] +> 16) +& 0xFF;   }
 	method button_x      { ($carr[0] +> 32) +& 0xFFFF; }
 	method button_y      { ($carr[0] +> 48) +& 0xFFFF; }
