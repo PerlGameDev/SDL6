@@ -1,13 +1,38 @@
 
 module SDL::Surface;
 
+BEGIN my $dir = IO::Path.new($?FILE).directory;
+
 use NativeCall;
 use SDL::Rect;
+use SDL::CompileTestLib;
+
+compile_test_lib( "$dir/memcopy" ) unless "$dir/memcopy{$*VM<config><load_ext>}".IO.e;
 
 class SDL::Surface {
 	has OpaquePointer $.pointer;
 	has OpaquePointer $.rw;
 	has Str           $.file;
+	has               $.struct;
+	has               $.format;
+	has               $.format_bpp;
+	has               $.format_Bpp;
+	has               $.format_rloss;
+	has               $.format_gloss;
+	has               $.format_bloss;
+	has               $.format_aloss;
+	has               $.format_rshift;
+	has               $.format_gshift;
+	has               $.format_bshift;
+	has               $.format_ashift;
+	has               $.format_rmask;
+	has               $.format_gmask;
+	has               $.format_bmask;
+	has               $.format_amask;
+	has               $.format_colorkey;
+	has               $.format_alpha;
+	has               $.palette;
+	has               $.pixels;
 	has Bool          $.is_bmp;
 	has Bool          $.is_cur;
 	has Bool          $.is_ico;
@@ -51,7 +76,68 @@ class SDL::Surface {
 		unless $!pointer {
 			$!pointer = _load_rw( $!rw, 1 ); # $rw gets freed after that
 		}
+
+		$!struct  = get_buf( $!pointer, 42 );
+		
+		# typedef struct {
+		#   SDL_Palette *palette;
+		#   Uint8  BitsPerPixel;
+		#   Uint8  BytesPerPixel;
+		#   Uint8  Rloss, Gloss, Bloss, Aloss;
+		#   Uint8  Rshift, Gshift, Bshift, Ashift;
+		#   Uint32 Rmask, Gmask, Bmask, Amask;
+		#   Uint32 colorkey;
+		#   Uint8  alpha;
+		# } SDL_PixelFormat;
+		# 0: 0                        palette
+		# 1: 08 00 00 00 00 00 04 20  Gshift Rshift Aloss Bloss Gloss Rloss BytesPerPixel BitsPerPixel
+		# 2: ..000000FF. PP PP 18 10  Rmask Ashift Bshift
+		# 3: ..00FF0000. ..0000FF00.  Bmask Gmask
+		# 4: ..00000000. ..FF000000.  colorkey Amask
+		# 5:                      00  alpha
+
+		$!format          = get_buf( _get_pointer( $!struct[1] ), 41 );
+		$!palette         = get_buf( _get_pointer( $!format[0] ), 35 ) if $!format[0];
+		$!format_bpp      = $!format[1]       +& 0xFF;
+		$!format_Bpp      = $!format[1] +>  8 +& 0xFF;
+		$!format_rloss    = $!format[1] +> 16 +& 0xFF;
+		$!format_gloss    = $!format[1] +> 24 +& 0xFF;
+		$!format_bloss    = $!format[1] +> 32 +& 0xFF;
+		$!format_aloss    = $!format[1] +> 40 +& 0xFF;
+		$!format_rshift   = $!format[1] +> 48 +& 0xFF;
+		$!format_gshift   = $!format[1] +> 56;
+		$!format_bshift   = $!format[2]       +& 0xFF;
+		$!format_ashift   = $!format[2] +>  8 +& 0xFF;
+		$!format_rmask    = $!format[2] +> 32;
+		$!format_gmask    = $!format[3]       +& 0xFFFFFFFF;
+		$!format_bmask    = $!format[3] +> 32;
+		$!format_amask    = $!format[4]       +& 0xFFFFFFFF;
+		$!format_colorkey = $!format[4] +> 32;
+		$!format_alpha    = $!format[5]       +& 0xFF;
+#		printf( "typedef struct \{
+#  SDL_Palette *palette;
+#  Uint8  BitsPerPixel;
+#  Uint8  BytesPerPixel;
+#  Uint8  Rloss=%X, Gloss=%X, Bloss=%X, Aloss=%X;
+#  Uint8  Rshift=%X, Gshift=%X, Bshift=%X, Ashift=%X;
+#  Uint32 Rmask=%X, Gmask=%X, Bmask=%X, Amask=%X;
+#  Uint32 colorkey;
+#  Uint8  alpha;
+#\} SDL_PixelFormat;\n",
+#			$!format_rloss,  $!format_gloss,  $!format_bloss,  $!format_aloss,
+#			$!format_rshift, $!format_gshift, $!format_bshift, $!format_ashift,
+#			$!format_rmask,  $!format_gmask,  $!format_bmask,  $!format_amask,
+#		);
+		$!pixels = get_buf( _get_pointer( $!struct[4] ), self.pitch * self.height );
+		self.init();
 	}
+
+	method init { }
+
+	# accessors to the SDL_Surface structure
+	method width  { $!struct[2]       +& 0xFFFFFFFF }
+	method height { $!struct[2] +> 32 +& 0xFFFFFFFF }
+	method pitch  { $!struct[3]       +& 0xFFFF     }
 
 	method blit( SDL::Surface $target, SDL::Rect $clip = SDL::Rect, SDL::Rect $pos = SDL::Rect ) returns Int {
 		_blit( $!pointer, $clip ?? $clip.CArray !! CArray[int], $target.pointer, $pos ?? $pos.CArray !! CArray[int] )
@@ -73,6 +159,13 @@ class SDL::Surface {
 
 	method set_pixel ( Int $x = 0, Int $y = 0, Int $color = 0xFFFFFFFF ) {
 		_fill_rect( $!pointer, SDL::Rect.new( $x, $y, 1, 1 ).CArray, $color )
+	}
+
+	method get_pixel ( Int $x = 0, Int $y = 0 ) returns Int {
+		my $offset = ($x + $y * self.width) * $!format_Bpp;
+		my $chunk  = ($offset / 8).Int; # amd64 only :/
+		my $pos    = $offset % 8 * 8;
+		return $pos ?? $!pixels[ $chunk ] +& 0xFFFFFFFF00000000 +> $pos !! $!pixels[ $chunk ] +& 0xFFFFFFFF; # 1 Bpp => 32bpp currently only
 	}
 
 	# http://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
@@ -132,6 +225,20 @@ our sub _rw_from_file( Str, Str )                                        returns
 our sub _rw_from_const_mem( OpaquePointer, int )                         returns OpaquePointer  is native('libSDL')        is symbol('SDL_RWFromConstMem')  { * }
 our sub _fill_rect( OpaquePointer, CArray[int], int )                    returns Int            is native('libSDL')        is symbol('SDL_FillRect')        { * }
 our sub _get_clip_rect( OpaquePointer, CArray[int] )                                            is native('libSDL')        is symbol('SDL_GetClipRect')     { * }
+our sub _map_rgb( OpaquePointer, int, int, int )                         returns Int            is native('libSDL')        is symbol('SDL_MapRGB')          { * }
 
+our sub _get_buf( OpaquePointer, CArray[int], int )                                             is native("$dir/memcopy")  is symbol('GetBuf')              { * }
+our sub _get_pointer( int )                                              returns OpaquePointer  is native("$dir/memcopy")  is symbol('GetPointer')          { * }
+our sub get_buf( $pointer, $size, $debug = False ) {
+	my $struct  = CArray[int].new();
+	my $bytes   = ($size / 8 + 0.5).Int;
+	$struct[$_] = 0 for 0..$bytes;
+	_get_buf( $pointer, $struct, $size );
+	if $debug {
+		printf( "%X\n", $struct[$_] ) for 0..$bytes;
+		print "\n";
+	}
+	return $struct;
+}
 
 1;
