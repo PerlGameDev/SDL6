@@ -1,13 +1,11 @@
 
 module SDL::Surface;
 
-BEGIN my $dir = IO::Path.new($?FILE).directory;
-
 use NativeCall;
 use SDL::Rect;
-use SDL::CompileTestLib;
 
-compile_test_lib( "$dir/memcopy" ) unless "$dir/memcopy{$*VM<config><load_ext>}".IO.e;
+use soft;
+use Inline;
 
 class SDL::Surface {
 	has OpaquePointer $.pointer;
@@ -227,8 +225,21 @@ our sub _fill_rect( OpaquePointer, CArray[int], int )                    returns
 our sub _get_clip_rect( OpaquePointer, CArray[int] )                                            is native('libSDL')        is symbol('SDL_GetClipRect')     { * }
 our sub _map_rgb( OpaquePointer, int, int, int )                         returns Int            is native('libSDL')        is symbol('SDL_MapRGB')          { * }
 
-our sub _get_buf( OpaquePointer, CArray[int], int )                                             is native("$dir/memcopy")  is symbol('GetBuf')              { * }
-our sub _get_pointer( int )                                              returns OpaquePointer  is native("$dir/memcopy")  is symbol('GetPointer')          { * }
+
+our sub _get_buf( OpaquePointer, CArray[int], int )  is inline('C')  {'
+DLLEXPORT void *GetBuf( const void *from, void *to, size_t len )
+{
+	return memcpy( to, from, len );
+}
+'}
+
+our sub _get_pointer( int )  returns OpaquePointer  is inline('C')  {'
+DLLEXPORT void *GetPointer( size_t len )
+{
+	return (void *)len;
+}
+'}
+
 our sub get_buf( $pointer, $size, $debug = False ) {
 	my $struct  = CArray[int].new();
 	my $bytes   = ($size / 8 + 0.5).Int;
