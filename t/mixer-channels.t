@@ -11,12 +11,12 @@ plan *;
 
 # Setting up audio. You will hear nothing unless SDL_RELEASE_TESTING is set.
 my $delay           = 50;
-my $audio_test_file = 'silence.wav';
+my $audio_test_file = 'share/silence.wav';
 my $volume          = 1;
 
 if %*ENV{'SDL_RELEASE_TESTING'} {
 	$delay           = 300;
-	$audio_test_file = 'sample.wav';
+	$audio_test_file = 'share/sample.wav';
 	$volume          = 20;
 }
 
