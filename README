@@ -1,0 +1,3 @@
+This module provides access to the Simple DirectMedia Layer (www.libsdl.org) to Perl6. The hope is for this
+module to be implemented in pure Perl 6. Currently the module is broken do to a dependency on NativeCall and Inline::C 
+libraries. Please have a look at the issues (https://github.com/PerlGameDev/SDL6/issues) to help out.
