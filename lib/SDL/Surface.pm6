@@ -233,7 +233,7 @@ DLLEXPORT void *GetBuf( const void *from, void *to, size_t len )
 }
 '}
 
-our sub _get_pointer( int )  returns OpaquePointer  is inline('C')  {'
+our sub _get_pointer( int )  is inline('C')  {'
 DLLEXPORT void *GetPointer( size_t len )
 {
 	return (void *)len;
