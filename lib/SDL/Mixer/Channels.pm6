@@ -16,5 +16,3 @@ our sub fading( int )                          returns Int  is native('libSDL_mi
 # wrappers (for example to support optional parameters)
 # Note: dont use typed parameters here
 our sub play( $channel, $sample, $loops, $time = -1 )  returns Int  { _play( $channel, $sample, $loops, $time ) }
-
-1;

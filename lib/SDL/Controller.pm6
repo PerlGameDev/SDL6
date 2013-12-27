@@ -82,5 +82,3 @@ class SDL::Controller {
 
 our sub _pump_events( )  returns Int  is native('libSDL')  is symbol('SDL_PumpEvents')  { * }
 our sub _delay( int32 )               is native('libSDL')  is symbol('SDL_Delay')       { * }
-
-1;

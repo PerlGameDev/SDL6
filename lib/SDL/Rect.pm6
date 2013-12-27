@@ -21,5 +21,3 @@ class SDL::Rect {
 		$carr
 	}
 }
-
-1;

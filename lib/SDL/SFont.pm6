@@ -80,5 +80,3 @@ class SDL::SFont is SDL::Surface {
 		}
 	}
 }
-
-1;

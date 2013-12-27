@@ -16,5 +16,3 @@ class SDL::VideoInfo is repr('CStruct') {
 }
 
 our sub get_video_info( )  returns SDL::VideoInfo  is native('libSDL')  is symbol('SDL_GetVideoInfo')  { * }
-
-1;
