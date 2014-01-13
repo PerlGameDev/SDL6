@@ -418,5 +418,3 @@ constant KMOD_META  = KMOD_LMETA  +| KMOD_RMETA;
 # SDL::Events/repeat
 constant SDL_DEFAULT_REPEAT_DELAY    = 500;
 constant SDL_DEFAULT_REPEAT_INTERVAL = 30;
-
-1;

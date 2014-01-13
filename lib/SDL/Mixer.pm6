@@ -15,9 +15,9 @@ our constant $MIX_DEFAULT_CHANNELS  = 2;
 our constant $MIX_MAX_VOLUME        = 128;
 our constant $MIX_CHANNEL_POST      = -2;
 
-our constant $MIX_NO_FADING  = 0,
-our constant $MIX_FADING_OUT = 1,
-our constant $MIX_FADING_IN  = 2,
+our constant $MIX_NO_FADING  = 0;
+our constant $MIX_FADING_OUT = 1;
+our constant $MIX_FADING_IN  = 2;
 
 our constant $MUS_NONE     = 0;
 our constant $MUS_CMD      = 1;
@@ -31,5 +31,3 @@ our constant $MUS_MP3_FLAC = 8;
 
 our sub open_audio( int32, int32, int32, int32 )	returns Int	is native('libSDL_mixer')	is symbol('Mix_OpenAudio')	{ * }
 our sub close_audio( )								returns Int	is native('libSDL_mixer')	is symbol('Mix_CloseAudio')	{ * }
-
-1;

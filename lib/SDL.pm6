@@ -260,5 +260,3 @@ our sub init( int32 )		returns Int	is native('libSDL')	is named('SDL_strupr')	{ 
 our sub init( int32 )		returns Int	is native('libSDL')	is named('SDL_ulltoa')	{ * }
 our sub init( int32 )		returns Int	is native('libSDL')	is named('SDL_ultoa')	{ * }
 =end DATA
-
-1;

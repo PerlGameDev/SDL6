@@ -13,5 +13,3 @@ class SDL::App is SDL::Surface {
 }
 
 our sub _set_video_mode( Int, Int, Int, Int )  returns OpaquePointer  is native('libSDL')  is symbol('SDL_SetVideoMode')  { * }
-
-1;

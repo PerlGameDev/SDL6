@@ -10,5 +10,3 @@ our sub was_init( int32 )		returns Int				is native('libSDL')	is symbol('SDL_Was
 our sub get_ticks( )			returns Int				is native('libSDL')	is symbol('SDL_GetTicks')		{ * }
 our sub delay( int32 )									is native('libSDL')	is symbol('SDL_Delay')			{ * }
 #our sub linked_version( )		returns SDL::Version	is native('libSDL')	is symbol('SDL_Linked_Version')	{ * }
-
-1;

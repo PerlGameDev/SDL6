@@ -251,5 +251,3 @@ our sub get_buf( $pointer, $size, $debug = False ) {
 	}
 	return $struct;
 }
-
-1;
