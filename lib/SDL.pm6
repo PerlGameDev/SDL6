@@ -5,19 +5,11 @@ use NativeCall;
 
 constant SDL_INIT_VIDEO = 32;
 
-class SDL::Version is repr('CStruct') {
-	# this is a workaround, since NativeCall doesn't yet handle sized ints right
-	has int8 $!version;
-	method major() {
-		return $!version +& 0xFF;
-	}
-	method minor() {
-		return ($!version +& 0xFF00) +> 8;
-	}
-	method patch() {
-		return ($!version +& 0xFF0000) +> 16;
-	}
-}
+class SDL::Version is repr('CStruct') {  # typedef struct {
+    has uint8 $.major;                   #     Uint8 major;
+    has uint8 $.minor;                   #     Uint8 minor;
+    has uint8 $.patch;                   #     Uint8 patch;
+}                                        # } SDL_version;
 
 =begin pod
 
