@@ -10,7 +10,7 @@ is SDL::init( 1 ),               0, "SDL::init";
 is SDL::was_init( 0 ),           1, "SDL::was_init";
 is SDL::init_subsystem( 255 ),   0, "SDL::init_subsystem";
 ok SDL::was_init( 0 ) > 1,          "SDL::was_init";
-SDL::quit_subsystem( 254 ),    pass "SDL::quit_subsystem";
+SDL::quit_subsystem( 254 );    pass "SDL::quit_subsystem";
 is SDL::was_init( 0 ),           1, "SDL::was_init";
 
 SDL::delay( 200 );
