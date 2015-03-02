@@ -2,6 +2,6 @@
     "name" : "SDL",
     "version" : "*",
     "description" : "A Perl 6 wrapper around SDL 1.2",
-    "depends" : [ "NativeCall", "Inline" ],
+    "depends" : [ "Inline" ],
     "source-url" : "git://github.com/PerlGameDev/SDL6.git"
 }
