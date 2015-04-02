@@ -2,6 +2,21 @@
     "name" : "SDL",
     "version" : "*",
     "description" : "A Perl 6 wrapper around SDL 1.2",
+    "provides" : {
+        "SDL" : "lib/SDL.pm6",
+        "SDL::Rect"            : "lib/SDL/Rect.pm6",
+        "SDL::Controller"      : "lib/SDL/Controller.pm6",
+        "SDL::Video"           : "lib/SDL/Video.pm6",
+        "SDL::Surface"         : "lib/SDL/Surface.pm6",
+        "SDL::Version"         : "lib/SDL/Version.pm6",
+        "SDL::SFont"           : "lib/SDL/SFont.pm6",
+        "SDL::Mixer"           : "lib/SDL/Mixer.pm6",
+        "SDL::App"             : "lib/SDL/App.pm6",
+        "SDL::Event"           : "lib/SDL/Event.pm6",
+        "SDL::Mixer::Samples"  : "lib/SDL/Mixer/Samples.pm6",
+        "SDL::Mixer::Effects"  : "lib/SDL/Mixer/Effects.pm6",
+        "SDL::Mixer::Channels" : "lib/SDL/Mixer/Channels.pm6"
+    },
     "depends" : [ "Inline" ],
     "source-url" : "git://github.com/PerlGameDev/SDL6.git"
 }
