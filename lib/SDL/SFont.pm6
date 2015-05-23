@@ -1,5 +1,4 @@
-
-module SDL::SFont;
+unit module SDL::SFont;
 
 use NativeCall;
 use SDL::Rect;

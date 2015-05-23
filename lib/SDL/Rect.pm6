@@ -1,5 +1,4 @@
-
-module SDL::Rect;
+unit module SDL::Rect;
 
 use NativeCall; # for CArray type
 

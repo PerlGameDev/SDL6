@@ -1,5 +1,4 @@
-
-module SDL::Surface;
+unit module SDL::Surface;
 
 use NativeCall;
 use SDL::Rect;

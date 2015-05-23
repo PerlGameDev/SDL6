@@ -1,4 +1,4 @@
-module SDL::Mixer::Channels;
+unit module SDL::Mixer::Channels;
 
 use NativeCall;
 

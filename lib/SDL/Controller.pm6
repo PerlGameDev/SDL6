@@ -1,5 +1,4 @@
-
-module SDL::Controller;
+unit module SDL::Controller;
 
 use NativeCall;
 #use SDL; # I cant do that?
