@@ -1,5 +1,4 @@
-
-module SDL::Video;
+unit module SDL::Video;
 
 use NativeCall;
 

@@ -1,5 +1,4 @@
-
-module SDL;
+unit module SDL;
 
 use NativeCall;
 

@@ -1,5 +1,4 @@
-
-module SDL::Mixer::Samples;
+unit module SDL::Mixer::Samples;
 
 use NativeCall;
 

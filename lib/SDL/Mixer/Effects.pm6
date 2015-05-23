@@ -1,5 +1,4 @@
-
-module SDL::Mixer::Effects;
+unit module SDL::Mixer::Effects;
 
 use NativeCall;
 
