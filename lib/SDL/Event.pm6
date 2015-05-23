@@ -1,4 +1,3 @@
-
 unit module SDL::Event;
 
 use NativeCall; # for CArray type

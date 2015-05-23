@@ -1,4 +1,3 @@
-
 use SDL::CStructs;
 unit class SDL::Rect is repr('CStruct') is SDL_Rect;
 #~ has  int16 $.x;

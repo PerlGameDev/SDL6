@@ -1,4 +1,3 @@
-
 unit module SDL::Controller;
 
 use NativeCall;
