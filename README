@@ -1,2 +1,6 @@
 This module provides access to the Simple DirectMedia Layer (www.libsdl.org) to Perl6. The hope is for this
 module to be implemented in pure Perl 6.
+
+## Dependencies
+
+ - libSDL, libSDL-mixer
