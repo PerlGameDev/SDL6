@@ -44,7 +44,7 @@ is SDL::Mixer::Channels::volume( -1, $volume ), 10, "[volume] set to $volume, pr
 
 # Loading audio file.
 my $sample_chunk = SDL::Mixer::Samples::load_WAV( $audio_test_file );
-isa_ok( $sample_chunk, 'OpaquePointer', "[load_WAV] loaded audio sample $audio_test_file" );
+isa_ok( $sample_chunk, 'Pointer', "[load_WAV] loaded audio sample $audio_test_file" );
 
 # Play that audio file.
 my $playing_channel = SDL::Mixer::Channels::play( -1, $sample_chunk, -1, -1 );
