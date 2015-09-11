@@ -1,5 +1,5 @@
 
-module SDL;
+unit module SDL;
 
 use NativeCall;
 
@@ -57,7 +57,7 @@ our sub get_ticks( )              returns Int            is native('libSDL')  is
 our sub get_error( )              returns Str            is native('libSDL')  is symbol('SDL_GetError')        { * }
 our sub delay( int32 )                                   is native('libSDL')  is symbol('SDL_Delay')           { * }
 our sub linked_version( )         returns SDL::Version   is native('libSDL')  is symbol('SDL_Linked_Version')  { * }
-our sub rw_from_file( Str, Str )  returns OpaquePointer  is native('libSDL')  is symbol('SDL_RWFromFile')      { * }
+our sub rw_from_file( Str, Str )  returns Pointer        is native('libSDL')  is symbol('SDL_RWFromFile')      { * }
 
 =begin DATA
 our sub init( int32 )		returns Int	is native('libSDL')	is named('SDL_AddTimer')	{ * }

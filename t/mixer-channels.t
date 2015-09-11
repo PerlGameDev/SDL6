@@ -5,16 +5,17 @@ use SDL;
 use SDL::Mixer;
 use SDL::Mixer::Channels;
 use SDL::Mixer::Samples;
+use NativeCall;
 use Test;
 
-plan *;
+plan 23;
 
 # Setting up audio. You will hear nothing unless SDL_RELEASE_TESTING is set.
 my $delay           = 50;
 my $audio_test_file = 'share/silence.wav';
 my $volume          = 1;
 
-if %*ENV{'SDL_RELEASE_TESTING'} {
+if %*ENV<SDL_RELEASE_TESTING> {
 	$delay           = 300;
 	$audio_test_file = 'share/sample.wav';
 	$volume          = 20;
@@ -22,13 +23,13 @@ if %*ENV{'SDL_RELEASE_TESTING'} {
 
 # Try to init audio. If it fails its not our fault, maybe the machine has no sound card.
 if 0 != SDL::init( 16 ) {
-	skip_rest( 'Failed to initialize audio with reason: "' ~ SDL::get_error() ~ '"' );
+	skip-rest( 'Failed to initialize audio with reason: "' ~ SDL::get_error() ~ '"' );
 	exit;
 }
 
 # Basically the same
 if 0 != SDL::Mixer::open_audio( 44100, 36880, 2, 4096 ) {
-	skip_rest( 'Failed to open audio: "' ~ SDL::get_error() ~ '"' );
+	skip-rest( 'Failed to open audio: "' ~ SDL::get_error() ~ '"' );
 	exit;
 }
 
@@ -44,7 +45,7 @@ is SDL::Mixer::Channels::volume( -1, $volume ), 10, "[volume] set to $volume, pr
 
 # Loading audio file.
 my $sample_chunk = SDL::Mixer::Samples::load_WAV( $audio_test_file );
-isa_ok( $sample_chunk, 'OpaquePointer', "[load_WAV] loaded audio sample $audio_test_file" );
+isa-ok( $sample_chunk, OpaquePointer, "[load_WAV] loaded audio sample $audio_test_file" );
 
 # Play that audio file.
 my $playing_channel = SDL::Mixer::Channels::play( -1, $sample_chunk, -1, -1 );
@@ -139,20 +140,11 @@ is $callback_finished,                                2, "[finished] callback st
 
 #isnt(	$playing_channel, -1,	"[fade_in_channel_timed] play " . ( $delay * 2 ) . " ms after $delay ms fade in for channel $playing_channel");
 
-#isa_ok(SDL::Mixer::Channels::get_chunk($playing_channel),'SDL::Mixer::MixChunk', '[get_chunk]');
+#isa-ok(SDL::Mixer::Channels::get_chunk($playing_channel),'SDL::Mixer::MixChunk', '[get_chunk]');
 #is( $finished > 0, 1, '[callback_finished] called the callback got ' . $finished);
 
 #sleep(1);
 
-
-
-
-
-
-
-
 SDL::delay( $delay );
 SDL::Mixer::close_audio();
 pass '[close_audio] ran';
-
-done;

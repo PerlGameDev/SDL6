@@ -1,23 +1,14 @@
 
-module SDL::Rect;
+unit class SDL::Rect is repr('CStruct');
+has  int16 $.x;
+has  int16 $.y;
+has uint16 $.w;
+has uint16 $.h;
 
-use NativeCall; # for CArray type
+multi method new( :$x!, :$y = 0, :$w = 0, :$h = 0 ) {
+    self.bless( :$x, :$y, :$w, :$h );
+}
 
-class SDL::Rect {
-	has Int $.x is rw;
-	has Int $.y is rw;
-	has Int $.w is rw;
-	has Int $.h is rw;
-
-	method new( $x = 0, $y = 0, $w = 0, $h = 0 ) {
-		self.bless( *, x => $x, y => $y, w => $w, h => $h );
-	}
-
-	submethod BUILD( :$!x, :$!y, :$!w, :$!h ) { * }
-
-	method CArray {
-		my $carr = CArray[int].new();
-		$carr[0] = ($!h +< 48) +| ($!w +< 32) +| ($!y +< 16) +| $!x;
-		$carr
-	}
+multi method new( $x = 0, $y = 0, $w = 0, $h = 0 ) {
+    self.bless( :$x, :$y, :$w, :$h );
 }

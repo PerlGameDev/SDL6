@@ -1,5 +1,5 @@
 
-module SDL::Version;
+unit module SDL::Version;
 
 #use NativeCall;
 

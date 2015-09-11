@@ -1,7 +1,27 @@
 {
     "name" : "SDL",
-    "version" : "*",
+    "version" : "0.1.0",
     "description" : "A Perl 6 wrapper around SDL 1.2",
-    "depends" : [ "Inline" ],
+    "depends" : [ ],
+    "provides" : {
+        "SDL"                  : "lib/lib/SDL.pm6",
+        "SDL::Version"         : "lib/lib/SDL/Version.pm6",
+        "SDL::CStructs"        : "lib/lib/SDL/CStructs.pm6",
+        "SDL::PixelFormat"     : "lib/lib/SDL/PixelFormat.pm6",
+        "SDL::Palette"         : "lib/lib/SDL/Palette.pm6",
+        "SDL::SFont"           : "lib/lib/SDL/SFont.pm6",
+        "SDL::Video"           : "lib/lib/SDL/Video.pm6",
+        "SDL::Surface"         : "lib/lib/SDL/Surface.pm6",
+        "SDL::App"             : "lib/lib/SDL/App.pm6",
+        "SDL::Rect"            : "lib/lib/SDL/Rect.pm6",
+        "SDL::SDL_video"       : "lib/lib/SDL/SDL_video.pm",
+        "SDL::Mixer"           : "lib/lib/SDL/Mixer.pm6",
+        "SDL::Mixer::Samples"  : "lib/lib/SDL/Mixer/Samples.pm6",
+        "SDL::Mixer::Effects"  : "lib/lib/SDL/Mixer/Effects.pm6",
+        "SDL::Mixer::Channels" : "lib/lib/SDL/Mixer/Channels.pm6",
+        "SDL::Event"           : "lib/lib/SDL/Event.pm6",
+        "SDL::Controller"      : "lib/lib/SDL/Controller.pm6",
+        "SDL::Color"           : "lib/lib/SDL/Color.pm"
+    },
     "source-url" : "git://github.com/PerlGameDev/SDL6.git"
 }

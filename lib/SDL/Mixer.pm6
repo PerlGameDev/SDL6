@@ -1,5 +1,5 @@
 
-module SDL::Mixer;
+unit module SDL::Mixer;
 
 use NativeCall;
 
