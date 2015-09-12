@@ -1,5 +1,5 @@
 
-class SDL::Palette is repr('CStruct');
+unit class SDL::Palette is repr('CStruct');
 
 use NativeCall;
 use SDL::Color;

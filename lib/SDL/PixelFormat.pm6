@@ -1,5 +1,5 @@
 
-class SDL::PixelFormat is repr('CStruct');
+unit class SDL::PixelFormat is repr('CStruct');
 
 use SDL::Palette;
 

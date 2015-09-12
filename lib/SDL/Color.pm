@@ -1,5 +1,5 @@
 
-class SDL::Color is repr('CStruct');
+unit class SDL::Color is repr('CStruct');
 
 #~ has uint8 $.r;
 #~ has uint8 $.g;
