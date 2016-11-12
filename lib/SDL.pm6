@@ -49,15 +49,15 @@ such as missing mouse driver when using with framebuffer device. In this case yo
 
 =end pod
 
-our sub init( int32 )             returns Int            is native('libSDL')  is symbol('SDL_Init')            { * }
-our sub init_subsystem( int32 )   returns Int            is native('libSDL')  is symbol('SDL_InitSubSystem')   { * }
-our sub quit_subsystem( int32 )                          is native('libSDL')  is symbol('SDL_QuitSubSystem')   { * }
-our sub was_init( int32 )         returns Int            is native('libSDL')  is symbol('SDL_WasInit')         { * }
-our sub get_ticks( )              returns Int            is native('libSDL')  is symbol('SDL_GetTicks')        { * }
-our sub get_error( )              returns Str            is native('libSDL')  is symbol('SDL_GetError')        { * }
-our sub delay( int32 )                                   is native('libSDL')  is symbol('SDL_Delay')           { * }
-our sub linked_version( )         returns SDL::Version   is native('libSDL')  is symbol('SDL_Linked_Version')  { * }
-our sub rw_from_file( Str, Str )  returns Pointer        is native('libSDL')  is symbol('SDL_RWFromFile')      { * }
+our sub init( int32 )             returns int32          is native('SDL')  is symbol('SDL_Init')            { * }
+our sub init_subsystem( int32 )   returns int32          is native('SDL')  is symbol('SDL_InitSubSystem')   { * }
+our sub quit_subsystem( int32 )                          is native('SDL')  is symbol('SDL_QuitSubSystem')   { * }
+our sub was_init( int32 )         returns int32          is native('SDL')  is symbol('SDL_WasInit')         { * }
+our sub get_ticks( )              returns int32          is native('SDL')  is symbol('SDL_GetTicks')        { * }
+our sub get_error( )              returns Str            is native('SDL')  is symbol('SDL_GetError')        { * }
+our sub delay( int32 )                                   is native('SDL')  is symbol('SDL_Delay')           { * }
+our sub linked_version( )         returns SDL::Version   is native('SDL')  is symbol('SDL_Linked_Version')  { * }
+our sub rw_from_file( Str, Str )  returns Pointer        is native('SDL')  is symbol('SDL_RWFromFile')      { * }
 
 =begin DATA
 our sub init( int32 )		returns Int	is native('libSDL')	is named('SDL_AddTimer')	{ * }

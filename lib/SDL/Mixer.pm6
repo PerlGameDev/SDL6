@@ -29,5 +29,5 @@ our constant $MUS_MP3      = 6;
 our constant $MUS_MP3_MAD  = 7;
 our constant $MUS_MP3_FLAC = 8;
 
-our sub open_audio( int32, int32, int32, int32 )	returns Int	is native('libSDL_mixer')	is symbol('Mix_OpenAudio')	{ * }
-our sub close_audio( )								returns Int	is native('libSDL_mixer')	is symbol('Mix_CloseAudio')	{ * }
+our sub open_audio( int32, int32, int32, int32 )  returns int32	is native('SDL_mixer')	is symbol('Mix_OpenAudio')	{ * }
+our sub close_audio( )                            returns int32	is native('SDL_mixer')	is symbol('Mix_CloseAudio')	{ * }
