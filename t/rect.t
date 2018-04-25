@@ -1,13 +1,14 @@
-use lib 'lib';
-use SDL::Rect;
+use SDL;
 use Test;
 
 plan 9;
 
-my $r1 = SDL::Rect.new(:x(1), :y(2), :w(3), :h(4));
-my $r2 = SDL::Rect.new(4, 3, 2, 1);
+SDL_Linked_Version() andthen diag sprintf 'v%d.%d.%d', .major, .minor, .patch;
 
-ok $r1 ~~ SDL::Rect, 'create a SDL::Rect object';
+my $r1 = SDL_Rect.new(1, 2, 3, 4);
+my $r2 = SDL_Rect.new(4, 3, 2, 1);
+
+ok $r1 ~~ SDL_Rect, 'create a SDL::Rect object';
 is $r1.x, 1, 'rect one attribute x';
 is $r1.y, 2, 'rect one attribute y';
 is $r1.w, 3, 'rect one attribute w';
